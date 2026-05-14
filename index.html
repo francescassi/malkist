@@ -150,7 +150,7 @@ opacity:0.85;
 
 <body>
 
-<audio id="music" loop>
+<audio id="music" loop preload="auto">
   <source src="https://www.dropbox.com/scl/fi/qd5c8yui9py969pw45lfx/INDAHNYA-DIRIMu-HIVI-lirik-lagu.mp3?rlkey=797vjqlckdbmsecarrcu79dcd&st=5xo1z3yq&raw=1" type="audio/mpeg">
 </audio>
 
@@ -187,7 +187,7 @@ mksh y fans udh hidup smpe skrg ♡
 
 <img src="foto2.jpeg">
 
-<p>INI ELU YAK WKWKWKKWKWKWKWK </p>
+<p>INI ELU YAK WKWKWKKWKWKWKWK</p>
 
 <button onclick="nextPage()">pnct y my bbg</button>
 
@@ -235,7 +235,7 @@ setiap tahun, lu harus semakin bijak,<br>
 semakin baik hati sama semua orangg, dan jgn oon deh.
 </p>
 
-<p>hbd hm </p>
+<p>hbd hm</p>
 
 <p>
 cieeeee
@@ -247,7 +247,7 @@ cieeeee
 
 <div class="page">
 
-<video controls playsinline width="260" style="border-radius:20px;">
+<video id="birthdayVideo" controls playsinline width="260" style="border-radius:20px;">
   <source src="https://www.dropbox.com/scl/fi/w3tpo5kwxstcsdkrapnng/copy_6702CD5F-CC5E-4F68-BF50-CF117CF77AAD.mov?rlkey=5l0kobmnyrw5kydwyw1gu58r9&st=xg0aas0e&raw=1" type="video/mp4">
 </video>
 
@@ -278,13 +278,30 @@ let pages=document.querySelectorAll(".page")
 let current=0
 
 function startAll(){
-document.getElementById("music").play()
+
+let music=document.getElementById("music")
+
+music.volume=1
+
+music.play().catch(err=>{
+console.log(err)
+})
+
 nextPage()
+
 }
 
 function nextPage(){
 
+let music=document.getElementById("music")
+let video=document.getElementById("birthdayVideo")
+
+if(video){
+video.pause()
+}
+
 pages[current].classList.remove("active")
+
 current++
 
 if(current>=pages.length){
@@ -292,6 +309,10 @@ current=pages.length-1
 }
 
 pages[current].classList.add("active")
+
+music.play().catch(err=>{
+console.log(err)
+})
 
 if(current===7){
 restartLetterTyping()
@@ -304,10 +325,13 @@ const emojis=["💗","🎀","🧸","💞"]
 function createEmoji(){
 
 let e=document.createElement("div")
+
 e.className="emoji"
+
 e.innerText=emojis[Math.floor(Math.random()*emojis.length)]
 
 e.style.left=Math.random()*100+"vw"
+
 e.style.animationDuration=(4+Math.random()*4)+"s"
 
 document.body.appendChild(e)
@@ -323,8 +347,11 @@ function createConfetti(){
 let c=document.createElement("div")
 
 c.className="confetti"
+
 c.style.left=Math.random()*100+"vw"
+
 c.style.backgroundColor=`hsl(${Math.random()*360},80%,60%)`
+
 c.style.animationDuration=(3+Math.random()*4)+"s"
 
 document.body.appendChild(c)
